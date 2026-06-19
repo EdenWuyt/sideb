@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<StoreContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<IProductRepository, ProductRepository>();    // Services for the repository pattern (lived as long as the HTTP request)
 
 var app = builder.Build();
 
@@ -21,5 +23,19 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+
+try
+{
+    using var scope = app.Services.CreateScope();   // Create a scope to get the services we need for seeding the database
+    var services = scope.ServiceProvider;           
+    var context = services.GetRequiredService<StoreContext>(); 
+    await context.Database.MigrateAsync();
+    await StoreContextSeed.SeedAsync(context);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex);
+    throw;
+}
 
 app.Run();
