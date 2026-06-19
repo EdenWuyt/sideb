@@ -1,0 +1,17 @@
+using Core.Entities;
+
+namespace Core.Interfaces;
+
+public interface IGenericRepository<T> where T : BaseEntity
+{
+    Task<IReadOnlyList<T>> ListAllAsync();
+    Task<T?> GetByIdAsync(int id);
+    Task<T?> GetBySpecAsync(ISpecification<T> spec);
+    Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+    Task<IReadOnlyList<TResult>> ListAsync<TResult>(ISpecification<T, TResult> spec);
+    void Add(T entity);
+    void Update(T entity);
+    void Delete(T entity);
+    bool Exists(int id);
+    Task<bool> SaveAllAsync();
+}

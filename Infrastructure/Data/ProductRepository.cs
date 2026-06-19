@@ -1,3 +1,5 @@
+// Unused file, keep it for reference
+
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;

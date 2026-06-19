@@ -1,3 +1,5 @@
+// Unused file, keep it for reference
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

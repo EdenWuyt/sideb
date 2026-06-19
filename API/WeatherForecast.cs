@@ -1,3 +1,5 @@
+// Unused file, keep it for reference
+
 namespace API;
 
 public class WeatherForecast
