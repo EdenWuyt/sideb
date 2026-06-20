@@ -1,7 +1,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using API.Dtos;
+using API.DTOs;
 using API.RequestHelpers;
 using Microsoft.AspNetCore.Mvc;
 

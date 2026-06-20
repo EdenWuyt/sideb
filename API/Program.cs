@@ -1,5 +1,6 @@
 using Core.Interfaces;
 using Infrastructure.Data;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,14 +15,21 @@ builder.Services.AddDbContext<StoreContext>(options =>
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();    // Services for the repository pattern (lived as long as the HTTP request)
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddCors();    // Add CORS services
 
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader()
+    .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
 app.MapControllers();
 
