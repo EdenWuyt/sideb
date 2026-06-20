@@ -4,13 +4,16 @@ namespace Core.Specifications;
 
 public class ProductSpecification : BaseSpecification<Product>
 {
-    public ProductSpecification(string? genre, string? label, string? artist, string? sort) : base(x =>
-            (string.IsNullOrWhiteSpace(genre) || x.Genre == genre) &&
-            (string.IsNullOrWhiteSpace(label) || x.Label == label) &&
-            (string.IsNullOrWhiteSpace(artist) || x.Artist == artist)
-            )
+    public ProductSpecification(ProductSpecParams specParams) : base(x =>
+            (specParams.Genres.Count == 0 || specParams.Genres.Contains(x.Genre)) &&
+            (specParams.Labels.Count == 0 || specParams.Labels.Contains(x.Label)) &&
+            (specParams.Artists.Count == 0 || specParams.Artists.Contains(x.Artist)) &&
+            (string.IsNullOrEmpty(specParams.Search) || x.Name.ToLower().Contains(specParams.Search) || x.Artist.ToLower().Contains(specParams.Search))
+    )
     {
-        switch (sort)
+        ApplyPaging((specParams.PageIndex - 1) * specParams.PageSize, specParams.PageSize);
+
+        switch (specParams.Sort)
         {
             case "priceAsc":
                 AddOrderBy(p => p.Price);

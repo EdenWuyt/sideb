@@ -59,7 +59,14 @@ public class GenericRepository<T> (StoreContext context) : IGenericRepository<T>
         return await _context.SaveChangesAsync() > 0;
     }
 
-    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    public async Task<int> CountAsync(ISpecification<T> spec)
+    {
+        var query = context.Set<T>().AsQueryable();
+        query = spec.ApplyCriteria(query);                              // apply specification criteria but not pagination
+        return await query.CountAsync();
+    }
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)    // pagination is applied in specification evaluator
     {
         return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
     }
@@ -68,5 +75,5 @@ public class GenericRepository<T> (StoreContext context) : IGenericRepository<T>
     {
         return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
     }
-
 }
+
