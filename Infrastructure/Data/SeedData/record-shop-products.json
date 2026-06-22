@@ -4,7 +4,7 @@
         "Artist":  "Geese",
         "Description":  "2025. 11 Songs. Duration: 45 minutes.",
         "Price":  42.29,
-        "PictureUrl":  "/images/products/records/01-geese-getting-killed.jpeg",
+        "PictureUrl":  "/images/products/01-geese-getting-killed.jpeg",
         "Genre":  "rock",
         "Label":  "Partisan Records",
         "Stock":  58
@@ -14,7 +14,7 @@
         "Artist":  "Deafheaven",
         "Description":  "2025. 12 Songs. Duration: 1 hour 2 minutes.",
         "Price":  46.52,
-        "PictureUrl":  "/images/products/records/02-deafheaven-lonely-people-with-power.jpeg",
+        "PictureUrl":  "/images/products/02-deafheaven-lonely-people-with-power.jpeg",
         "Genre":  "rock",
         "Label":  "Roadrunner Records",
         "Stock":  59
@@ -24,7 +24,7 @@
         "Artist":  "Clipse",
         "Description":  "2025. 13 Songs. Duration: 40 minutes.",
         "Price":  53.57,
-        "PictureUrl":  "/images/products/records/03-clipse-let-god-sort-em-out.jpeg",
+        "PictureUrl":  "/images/products/03-clipse-let-god-sort-em-out.jpeg",
         "Genre":  "hiphop",
         "Label":  "Roc Nation",
         "Stock":  47
@@ -34,7 +34,7 @@
         "Artist":  "McKinley Dixon",
         "Description":  "2025. 11 Songs. Duration: 35 minutes.",
         "Price":  42.29,
-        "PictureUrl":  "/images/products/records/04-mckinley-dixon-magic-alive.jpeg",
+        "PictureUrl":  "/images/products/04-mckinley-dixon-magic-alive.jpeg",
         "Genre":  "hiphop",
         "Label":  "City Slang",
         "Stock":  44
@@ -44,7 +44,7 @@
         "Artist":  "Ninajirachi",
         "Description":  "2025. 12 Songs. Duration: 39 minutes.",
         "Price":  45.11,
-        "PictureUrl":  "/images/products/records/05-ninajirachi-i-love-my-computer.jpeg",
+        "PictureUrl":  "/images/products/05-ninajirachi-i-love-my-computer.jpeg",
         "Genre":  "electronic",
         "Label":  "NLV Records",
         "Stock":  59
@@ -54,7 +54,7 @@
         "Artist":  "Billy Woods",
         "Description":  "2025. 18 Songs. Duration: 52 minutes.",
         "Price":  49.34,
-        "PictureUrl":  "/images/products/records/06-billy-woods-golliwog.jpeg",
+        "PictureUrl":  "/images/products/06-billy-woods-golliwog.jpeg",
         "Genre":  "hiphop",
         "Label":  "Backwoodz Studioz",
         "Stock":  55
@@ -64,7 +64,7 @@
         "Artist":  "Candelabro",
         "Description":  "2025. 14 Songs. Duration: 1 hour 13 minutes.",
         "Price":  39.47,
-        "PictureUrl":  "/images/products/records/07-candelabro-deseo-carne-y-voluntad.png",
+        "PictureUrl":  "/images/products/07-candelabro-deseo-carne-y-voluntad.png",
         "Genre":  "rock",
         "Label":  "Registro Movil",
         "Stock":  49
@@ -74,7 +74,7 @@
         "Artist":  "Huremic",
         "Description":  "2025. 5 Songs. Duration: 1 hour.",
         "Price":  40.88,
-        "PictureUrl":  "/images/products/records/08-huremic-seeking-darkness.jpeg",
+        "PictureUrl":  "/images/products/08-huremic-seeking-darkness.jpeg",
         "Genre":  "rock",
         "Label":  "Independent",
         "Stock":  50
@@ -84,7 +84,7 @@
         "Artist":  "Swans",
         "Description":  "2025. 7 Songs. Duration: 1 hour 55 minutes.",
         "Price":  54.98,
-        "PictureUrl":  "/images/products/records/09-swans-birthing.jpeg",
+        "PictureUrl":  "/images/products/09-swans-birthing.jpeg",
         "Genre":  "rock",
         "Label":  "Young God Records",
         "Stock":  68
@@ -94,7 +94,7 @@
         "Artist":  "Oneohtrix Point Never",
         "Description":  "2025. 15 Songs. Duration: 58 minutes.",
         "Price":  49.34,
-        "PictureUrl":  "/images/products/records/10-oneohtrix-point-never-tranquilizer.png",
+        "PictureUrl":  "/images/products/10-oneohtrix-point-never-tranquilizer.png",
         "Genre":  "electronic",
         "Label":  "Warp",
         "Stock":  25
@@ -104,7 +104,7 @@
         "Artist":  "okgutta",
         "Description":  "2025. 17 Songs. Duration: 43 minutes.",
         "Price":  42.29,
-        "PictureUrl":  "/images/products/records/11-okgutta-god-b-less-america.jpeg",
+        "PictureUrl":  "/images/products/11-okgutta-god-b-less-america.jpeg",
         "Genre":  "hiphop",
         "Label":  "Independent",
         "Stock":  39
@@ -114,7 +114,7 @@
         "Artist":  "Jane Remover",
         "Description":  "2025. 12 Songs. Duration: 49 minutes.",
         "Price":  46.52,
-        "PictureUrl":  "/images/products/records/12-jane-remover-revengeseekerz.jpeg",
+        "PictureUrl":  "/images/products/12-jane-remover-revengeseekerz.jpeg",
         "Genre":  "electronic",
         "Label":  "deadAir",
         "Stock":  32
@@ -124,7 +124,7 @@
         "Artist":  "Caciopea entre las Ruinas del Anfiteatro",
         "Description":  "2025. 16 Songs. Duration: 58 minutes.",
         "Price":  40.88,
-        "PictureUrl":  "/images/products/records/13-caciopea-entre-las-ruinas-del-anfiteatro-bien-que-se-padece-mal-que-se-disfruta.jpeg",
+        "PictureUrl":  "/images/products/13-caciopea-entre-las-ruinas-del-anfiteatro-bien-que-se-padece-mal-que-se-disfruta.jpeg",
         "Genre":  "folk",
         "Label":  "Independent",
         "Stock":  31
@@ -134,7 +134,7 @@
         "Artist":  "Ethel Cain",
         "Description":  "2025. 10 Songs. Duration: 1 hour 13 minutes.",
         "Price":  52.16,
-        "PictureUrl":  "/images/products/records/14-ethel-cain-willoughby-tucker-i-ll-always-love-you.png",
+        "PictureUrl":  "/images/products/14-ethel-cain-willoughby-tucker-i-ll-always-love-you.png",
         "Genre":  "folk",
         "Label":  "Daughters of Cain",
         "Stock":  30
@@ -144,7 +144,7 @@
         "Artist":  "Chuquimamani-Condori",
         "Description":  "2025. 15 Songs. Duration: 1 hour 5 minutes.",
         "Price":  49.34,
-        "PictureUrl":  "/images/products/records/15-chuquimamani-condori-los-thuthanaka.png",
+        "PictureUrl":  "/images/products/15-chuquimamani-condori-los-thuthanaka.png",
         "Genre":  "electronic",
         "Label":  "American Dreams",
         "Stock":  72
@@ -154,7 +154,7 @@
         "Artist":  "Freddie Gibbs",
         "Description":  "2025. 14 Songs. Duration: 47 minutes.",
         "Price":  54.98,
-        "PictureUrl":  "/images/products/records/16-freddie-gibbs-alfredo-2.jpeg",
+        "PictureUrl":  "/images/products/16-freddie-gibbs-alfredo-2.jpeg",
         "Genre":  "hiphop",
         "Label":  "ALC Records",
         "Stock":  23
@@ -164,7 +164,7 @@
         "Artist":  "Psynwav",
         "Description":  "2025. 10 Songs. Duration: 38 minutes.",
         "Price":  39.47,
-        "PictureUrl":  "/images/products/records/17-psynwav-musical-transients.png",
+        "PictureUrl":  "/images/products/17-psynwav-musical-transients.png",
         "Genre":  "rock",
         "Label":  "Independent",
         "Stock":  58
@@ -174,17 +174,17 @@
         "Artist":  "Anna von Hausswolff",
         "Description":  "2025. 12 Songs. Duration: 1 hour 12 minutes.",
         "Price":  49.34,
-        "PictureUrl":  "/images/products/records/18-anna-von-hausswolff-iconoclasts.jpeg",
+        "PictureUrl":  "/images/products/18-anna-von-hausswolff-iconoclasts.jpeg",
         "Genre":  "rock",
         "Label":  "City Slang",
         "Stock":  12
     },
     {
         "Name":  "Lux",
-        "Artist":  "Rosali­a",
+        "Artist":  "Rosalia",
         "Description":  "2025. 15 Songs. Duration: 49 minutes.",
         "Price":  50.75,
-        "PictureUrl":  "/images/products/records/19-rosalÃ­a-lux.jpeg",
+        "PictureUrl":  "/images/products/19-rosalia-lux.jpeg",
         "Genre":  "pop",
         "Label":  "Columbia Records",
         "Stock":  33
@@ -194,7 +194,7 @@
         "Artist":  "The Necks",
         "Description":  "2025. 4 Songs. Duration: 3 hours 9 minutes.",
         "Price":  47.93,
-        "PictureUrl":  "/images/products/records/20-the-necks-disquiet.jpeg",
+        "PictureUrl":  "/images/products/20-the-necks-disquiet.jpeg",
         "Genre":  "Jazz",
         "Label":  "Northern Spy Records",
         "Stock":  67
@@ -204,7 +204,7 @@
         "Artist":  "Vanessa Rossetto",
         "Description":  "2025. 8 Songs. Duration: 42 minutes.",
         "Price":  43.7,
-        "PictureUrl":  "/images/products/records/21-vanessa-rossetto-pictures-of-the-warm-south.jpeg",
+        "PictureUrl":  "/images/products/21-vanessa-rossetto-pictures-of-the-warm-south.jpeg",
         "Genre":  "electronic",
         "Label":  "ROOM40",
         "Stock":  33
@@ -214,7 +214,7 @@
         "Artist":  "Ichiko Aoba",
         "Description":  "2025. 11 Songs. Duration: 35 minutes.",
         "Price":  52.16,
-        "PictureUrl":  "/images/products/records/22-é’è‘‰å¸‚å­-luminescent-creatures.jpeg",
+        "PictureUrl":  "/images/products/22-ichiko-aoba-luminescent-creatures.jpeg",
         "Genre":  "folk",
         "Label":  "hermine",
         "Stock":  19
@@ -224,7 +224,7 @@
         "Artist":  "Natalia Lafourcade",
         "Description":  "2025. 14 Songs. Duration: 1 hour 16 minutes.",
         "Price":  47.93,
-        "PictureUrl":  "/images/products/records/23-natalia-lafourcade-cancionera.jpeg",
+        "PictureUrl":  "/images/products/23-natalia-lafourcade-cancionera.jpeg",
         "Genre":  "folk",
         "Label":  "Sony Music Latin",
         "Stock":  59
@@ -234,7 +234,7 @@
         "Artist":  "Nourished by Time",
         "Description":  "2025. 12 Songs. Duration: 45 minutes.",
         "Price":  45.11,
-        "PictureUrl":  "/images/products/records/24-nourished-by-time-the-passionate-ones.jpeg",
+        "PictureUrl":  "/images/products/24-nourished-by-time-the-passionate-ones.jpeg",
         "Genre":  "pop",
         "Label":  "XL Recordings",
         "Stock":  28
@@ -244,7 +244,7 @@
         "Artist":  "Racing Mount Pleasant",
         "Description":  "2025. 13 Songs. Duration: 57 minutes.",
         "Price":  40.88,
-        "PictureUrl":  "/images/products/records/25-racing-mount-pleasant-racing-mount-pleasant.jpeg",
+        "PictureUrl":  "/images/products/25-racing-mount-pleasant-racing-mount-pleasant.jpeg",
         "Genre":  "rock",
         "Label":  "Independent",
         "Stock":  53
