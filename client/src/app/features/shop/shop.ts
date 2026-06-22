@@ -32,7 +32,7 @@ import { FormsModule } from '@angular/forms';
 export class Shop implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
-  protected readonly products = signal<Pagination<Product>>({data: [], pageIndex: 1, pageSize: 10, count: 0});
+  protected readonly products = signal<Pagination<Product> | null>(null);
   sortOptions = [
     { value: 'nameAsc', label: 'Name (A-Z)' },
     { value: 'priceAsc', label: 'Price (Low to High)' },

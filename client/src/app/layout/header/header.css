@@ -10,3 +10,15 @@
     width: 32px;
     height: 32px;
 }
+
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+a {
+    &.active {
+        color: #3b82f6;
+    }
+}
+
