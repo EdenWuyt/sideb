@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.9" />
+    <PackageReference Include="StackExchange.Redis" Version="3.0.47-preview" />
   </ItemGroup>
 
   <PropertyGroup>

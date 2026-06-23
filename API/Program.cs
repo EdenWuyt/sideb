@@ -1,7 +1,9 @@
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using API.Middleware;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,14 @@ builder.Services.AddDbContext<StoreContext>(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();    // Services for the repository pattern (lived as long as the HTTP request)
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddCors();    // Add CORS services
+builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Redis") 
+        ?? throw new InvalidOperationException("Cannot get Redis connection string from configuration.");
+    var configuration = ConfigurationOptions.Parse(connectionString, true);
+    return ConnectionMultiplexer.Connect(configuration);
+});
+builder.Services.AddSingleton<ICartService, CartService>();
 
 var app = builder.Build();
 
