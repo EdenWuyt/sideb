@@ -1,15 +1,25 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error-interceptor';
 import { loadingInterceptor } from './core/interceptors/loading-interceptor';
+import { Init } from './core/services/init';
+import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor]))
+    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor])),
+    provideAppInitializer(async() => {    // The app is not seen ready until the promise returned by this function is resolved.
+      const initService = inject(Init);
+      return lastValueFrom(initService.init()).finally(() => {
+        const splash = document.getElementById('initial-splash');
+        if (splash) {
+          splash.remove();
+        }
+      });
+    })
   ]
 };

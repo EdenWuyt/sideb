@@ -5,3 +5,7 @@
 .container {
   @apply mx-auto px-6;
 }
+
+html {
+  overflow-y: scroll;
+}
