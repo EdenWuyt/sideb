@@ -5,11 +5,12 @@ import { Product } from '../../../shared/models/product';
 import { CurrencyPipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatDivider } from "@angular/material/divider";
 import { Cart } from '../../../core/services/cart';
 import { FormsModule } from '@angular/forms';
 import { Snackbar } from '../../../core/services/snackbar';
+import { IntegerOnlyValidator } from '../../../shared/validators/integer-only-validators';
 
 @Component({
   selector: 'app-product-details',
@@ -22,6 +23,7 @@ import { Snackbar } from '../../../core/services/snackbar';
     MatLabel,
     MatDivider,
     FormsModule,
+    IntegerOnlyValidator
 ],
   templateUrl: './product-details.html',
   styleUrl: './product-details.css',

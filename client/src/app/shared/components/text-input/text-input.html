@@ -1,0 +1,29 @@
+<mat-form-field appearance="outline" class="w-full mb-4" subscriptSizing="dynamic">
+    <mat-label>{{ label }}</mat-label>
+    <ng-content></ng-content>
+    <input matInput [formControl]="control" type="{{type}}" placeholder="{{label}}" class="withIcon? 'pr-10!' : ''"/>
+    @if (control.hasError('required')) {
+        <mat-error>{{ label }} is required</mat-error>
+    }
+    @if (control.hasError('email')) {
+        <mat-error>Email is invalid</mat-error>
+    }
+    @if (control.hasError('passwordUppercase')) {
+        <mat-error>Password must contain at least one uppercase letter</mat-error>
+    }
+    @if (control.hasError('passwordLowercase')) {
+        <mat-error>Password must contain at least one lowercase letter</mat-error>
+    }
+    @if (control.hasError('passwordNumber')) {
+        <mat-error>Password must contain at least one number</mat-error>
+    }
+    @if (control.hasError('passwordSpecialChar')) {
+        <mat-error>Password must contain at least one special character</mat-error>
+    }
+    @if (control.hasError('passwordLength')) {
+        <mat-error>Password must be at least 8 characters long</mat-error>
+    }
+    @if (control.hasError('matchPassword')) {
+        <mat-error>Confirm password does not match with password</mat-error>
+    }
+</mat-form-field>

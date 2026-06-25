@@ -1,0 +1,21 @@
+<mat-card class="max-w-lg mx-auto mt-32 p-8 bg-white!">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-semibold text-blue-500">Login</h1>
+        </div>
+        <app-text-input formControlName="email" label="Email" type="email" />
+        <app-text-input 
+            label="Password"
+            formControlName="password" 
+            [type]="passwordVisible ? 'text' : 'password'"
+            [withIcon]="true"
+        >
+            <div class="absolute inset-y-0 top-1 right-1 flex items-center">
+                <button mat-icon-button type="button" (click)="togglePasswordVisibility()">
+                    <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </div>
+        </app-text-input>
+        <button mat-flat-button type="submit" class="w-full py-2 mt-4" [disabled]="loginForm.invalid">Sign in</button>
+    </form>
+</mat-card>

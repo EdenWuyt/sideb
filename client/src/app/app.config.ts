@@ -6,12 +6,13 @@ import { errorInterceptor } from './core/interceptors/error-interceptor';
 import { loadingInterceptor } from './core/interceptors/loading-interceptor';
 import { Init } from './core/services/init';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor, loadingInterceptor, authInterceptor])),
     provideAppInitializer(async() => {    // The app is not seen ready until the promise returned by this function is resolved.
       const initService = inject(Init);
       return lastValueFrom(initService.init()).finally(() => {
