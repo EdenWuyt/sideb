@@ -18,6 +18,7 @@ builder.Services.AddDbContext<StoreContext>(options =>
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();    // Services for the repository pattern (lived as long as the HTTP request)
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddCors();    // Add CORS services
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {

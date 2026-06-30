@@ -1,5 +1,6 @@
 using Core.Interfaces;
 using Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
 
@@ -34,6 +35,9 @@ public class SpecificationEvaluator<T> where T : BaseEntity
             query = query.Skip(spec.Skip).Take(spec.Take); // apply pagination from specification
         }
 
+        query = spec.Includes.Aggregate(query, (current, include) => current.Include(include)); // apply includes from specification
+        query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include)); // apply include strings from specification
+
         return query;
     }
 
@@ -61,7 +65,7 @@ public class SpecificationEvaluator<T> where T : BaseEntity
             throw new InvalidOperationException("Select expression is required.");
         }
 
-        var selectedQuery = query.Select(spec.Select); // apply select clause from specification
+        var selectedQuery = query.Select(spec.Select); // apply select clause from specification (column projection)
 
         if (spec.IsDistinct)
         {
@@ -72,6 +76,8 @@ public class SpecificationEvaluator<T> where T : BaseEntity
         {
             selectedQuery = selectedQuery.Skip(spec.Skip).Take(spec.Take); // apply pagination from specification
         }
+
+        // Include expressions are often not applicable to projections
 
         return selectedQuery;
     }

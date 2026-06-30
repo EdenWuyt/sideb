@@ -8,8 +8,7 @@ namespace Infrastructure.Services;
 public class PaymentService(
     IConfiguration config, 
     ICartService cartService, 
-    IGenericRepository<Core.Entities.Product> productRepo, 
-    IGenericRepository<DeliveryMethod> dmRepo) : IPaymentService
+    IUnitOfWork unitOfWork) : IPaymentService
 {
     public async Task<ShoppingCart?> CreateOrUpdatePaymentIntent(string cartId)
     {
@@ -24,7 +23,7 @@ public class PaymentService(
 
         if (cart.DeliveryMethodId.HasValue)
         {
-            var deliveryMethod = await dmRepo.GetByIdAsync(cart.DeliveryMethodId.Value);
+            var deliveryMethod = await unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(cart.DeliveryMethodId.Value);
             if (deliveryMethod == null) return null;
             shippingPrice = deliveryMethod.Price;
         }
@@ -32,7 +31,7 @@ public class PaymentService(
         // get the correct price for each item in the cart and update it if necessary
         foreach (var item in cart.Items)
         {
-            var product = await productRepo.GetByIdAsync(item.ProductId);
+            var product = await unitOfWork.Repository<Core.Entities.Product>().GetByIdAsync(item.ProductId);
             if (product == null) return null;
 
             if (item.Price != product.Price) item.Price = product.Price;
