@@ -1,0 +1,132 @@
+import { inject, Injectable } from '@angular/core';
+import { ConfirmationToken, loadStripe, StripeAddressElement, StripeAddressElementOptions, StripeElements, StripePaymentElement, Stripe as StripeType } from '@stripe/stripe-js';
+import { environment } from '../../../environments/environment.development';
+import { HttpClient } from '@angular/common/http';
+import { Cart } from './cart';
+import { Cart as CartType } from '../../shared/models/cart';
+import { map } from 'rxjs/internal/operators/map';
+import { firstValueFrom } from 'rxjs';
+import { Account } from './account';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class Stripe {
+  baseUrl = environment.apiUrl;
+  private http = inject(HttpClient);
+  private accountService = inject(Account);
+  private cartService = inject(Cart);
+  private stripePromise: Promise<StripeType | null>;
+  private elements?: StripeElements;
+  private addressElement?: StripeAddressElement;
+  private paymentElement?: StripePaymentElement;
+
+  constructor() {
+    this.stripePromise = loadStripe(environment.stripePublicKey);
+  }
+
+  getStripeInstance() {
+    return this.stripePromise;
+  }
+  
+  createOrUpdatePaymentIntent() {
+    const cart = this.cartService.cart();
+    if (!cart) throw new Error('Problem with cart');
+    return this.http.post<CartType>(this.baseUrl + 'payments/'+ cart.id, {}).pipe(
+      map(cart => {
+        this.cartService.setCart(cart);
+        return cart;
+      })
+    );
+  }
+
+  async createConfirmationToken() {
+    const stripe = await this.getStripeInstance();
+    const elements = await this.initializeElements();
+    const result = await elements.submit();
+    if (result.error) throw new Error(result.error.message);
+    if (stripe) {
+      return await stripe.createConfirmationToken({ elements });
+    } else {
+      throw new Error('Stripe not available');
+    }
+  }
+
+  async confirmPayment(confirmationToken: ConfirmationToken) {
+    const stripe = await this.getStripeInstance();
+    const elements = await this.initializeElements();
+    const result = await elements.submit();
+    if (result.error) throw new Error(result.error.message);
+
+    const clientSecret = this.cartService.cart()?.clientSecret;
+    if (!clientSecret) throw new Error('Client secret not found');
+    if (!stripe) throw new Error('Stripe not available');
+    return await stripe.confirmPayment({
+      clientSecret: clientSecret,
+      confirmParams: {
+        confirmation_token: confirmationToken.id,
+      },
+      redirect: 'if_required',
+    });
+  }
+
+  async initializeElements() {
+    if (!this.elements) {
+      const stripe = await this.getStripeInstance();
+      if (stripe) {
+        const cart = await firstValueFrom(this.createOrUpdatePaymentIntent());
+        this.elements = stripe.elements({ clientSecret: cart.clientSecret, appearance: { labels: 'floating' } });
+      } else {
+        throw new Error('Stripe has not been loaded');
+      }
+    }
+    return this.elements;
+  }
+
+  async createAddressElement() {
+    if (!this.addressElement) {
+      const elements = await this.initializeElements();
+      if (elements) {
+        const user = this.accountService.currentUser();
+        let defaultValues: StripeAddressElementOptions['defaultValues'] = {};
+        if (user) defaultValues.name = user.firstName + ' ' + user.lastName;
+        if (user?.address) {
+          defaultValues.address = {
+            line1: user.address.line1,
+            line2: user.address.line2,
+            city: user.address.city,
+            state: user.address.state,
+            postal_code: user.address.postalCode,
+            country: user.address.country
+          };
+        }
+        const options: StripeAddressElementOptions = { 
+          mode: 'shipping',
+          defaultValues: defaultValues 
+        };
+        this.addressElement = elements.create('address', options);
+      } else {
+        throw new Error('Elements instance has not been loaded');
+      }
+    }
+    return this.addressElement;
+  }
+
+  async createPaymentElement() {
+    if (!this.paymentElement) {
+      const elements = await this.initializeElements();
+      if (elements) {
+        this.paymentElement = elements.create('payment');
+      } else {
+        throw new Error('Elements instance has not been loaded');
+      }
+    }
+    return this.paymentElement;
+  }
+
+  disposeElements() {
+    this.elements = undefined;
+    this .addressElement = undefined;
+    this.paymentElement = undefined;
+  }
+}

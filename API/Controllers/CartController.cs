@@ -1,5 +1,7 @@
 using Core.Interfaces;
 using Core.Entities;
+using API.DTOs;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -16,8 +18,9 @@ public class CartController(ICartService cartService) : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<ShoppingCart>> UpdateCart(ShoppingCart cart)
+    public async Task<ActionResult<ShoppingCart>> UpdateCart(ShoppingCartDto cartDto)
     {
+        var cart = cartDto.ToEntity();
         var updatedCart = await _cartService.SetCartAsync(cart);
         if (updatedCart == null) return BadRequest("Problem updating the cart");
         return Ok(updatedCart);
