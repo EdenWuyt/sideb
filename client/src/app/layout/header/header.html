@@ -1,11 +1,6 @@
 <header class="shadow-md p-3 w-full h-18 fixed top-0 bg-white z-50">
   <div class="flex items-center justify-between mx-auto">
-    <img routerLink="/" src="images/logo.png" alt="app logo" class="max-h-12 cursor-pointer" />
-    <nav class="flex gap-6 my-2 uppercase text-xl">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <a routerLink="/shop" routerLinkActive="active">Products</a>
-        <a routerLink="/test-error" routerLinkActive="active">Errors</a>
-    </nav>
+    <img routerLink="/shop" src="images/logo.png" alt="app logo" class="max-h-12 cursor-pointer" />
     <div class="flex items-center gap-3">
         <a matBadge="{{ cartService.itemCount() }}" matBadgeSize="large" class="custom-badge mt-2 mr-2" routerLink="/cart" routerLinkActive="active">
             <mat-icon>shopping_cart</mat-icon>

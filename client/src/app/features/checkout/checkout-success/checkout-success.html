@@ -1,28 +1,44 @@
+@if (signalrService.orderSignal(); as order) {
 <section class="py-16">
   <div class="mx-auto max-w-2xl px-4">
     <h2 class="font-semibold text-2xl mb-2">Thanks for your fake order!</h2>
-    <p class="text-gray-500">Your order <strong>#42</strong> will never be processed as this is a fake shop. We will not notify you of your order status.</p>
+    <p class="text-gray-500">Your order <strong>#{{ order.id }}</strong> will never be processed as this is a fake shop. We will not notify you of your order status.</p>
     <div class="space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-4 my-6">
         <dl class="flex items-center justify-between gap-4">
             <dt class="text-gray-500">Date</dt>
-            <dd class="font-medium">Today</dd>
+            <dd class="font-medium">{{ order.orderDate | date }}</dd>
         </dl>
         <dl class="flex items-center justify-between gap-4">
             <dt class="text-gray-500">Payment method</dt>
-            <dd class="font-medium">Card</dd>
+            <dd class="font-medium">{{ order.paymentSummary | paymentMethod }}</dd>
         </dl>
         <dl class="flex items-center justify-between gap-4">
             <dt class="text-gray-500">Address</dt>
-            <dd class="font-medium">Address</dd>
+            <dd class="font-medium">{{ order.shippingAddress | address }}</dd>
         </dl>
         <dl class="flex items-center justify-between gap-4">
             <dt class="text-gray-500">Amount</dt>
-            <dd class="font-medium">$100</dd>
+            <dd class="font-medium">{{ order.total | currency }}</dd>
         </dl>
     </div>
     <div class="flex items-center space-x-4">
-        <button routerLink="/orders/42" mat-flat-button>View your order</button>
+        <button routerLink="/orders/{{ order.id }}" mat-flat-button>View your order</button>
         <button routerLink="/shop" mat-stroked-button>Continue shopping</button>
     </div>
   </div>
 </section>
+} @else {
+<section class="py-16">
+  <div class="mx-auto max-w-2xl px-4">
+    <h2 class="font-semibold text-2xl mb-4">Order processing, please wait...</h2>
+    <div class="rounded-lg border border-gray-100 bg-gray-50 p-6 mb-8">
+        <div class="flex flex-col items-center justify-center gap-2">
+            <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
+            <p class="text-xl">Loading order...</p>
+            <span>Your payment has been received, we are processing your order.</span>
+        </div>
+    </div>
+    <button routerLink="/shop" mat-stroked-button>Continue shopping</button>
+  </div>
+</section>
+}

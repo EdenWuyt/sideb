@@ -17,6 +17,8 @@ import { CheckoutReview } from './checkout-review/checkout-review';
 import { ConfirmationToken } from '@stripe/stripe-js';
 import { Cart } from '../../core/services/cart';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OrderToCreate, ShippingAddress } from '../../shared/models/order';
+import { Order } from '../../core/services/order';
 
 @Component({
   selector: 'app-checkout',
@@ -38,6 +40,7 @@ export class Checkout implements OnInit, OnDestroy {
   private stripeService = inject(Stripe);
   private accountService = inject(Account);
   private cartService = inject(Cart);
+  private orderService = inject(Order);
   private snackbar = inject(Snackbar);
   addressElement?: StripeAddressElement;
   paymentElement?: StripePaymentElement;
@@ -90,7 +93,7 @@ export class Checkout implements OnInit, OnDestroy {
   async onStepChange(event: StepperSelectionEvent) {
     if (event.selectedIndex === 1) {
       if (this.saveAddress) {
-        const address = await this.getAdreessFromStripeElement();
+        const address = await this.getAdreessFromStripeElement() as Address;
         address && firstValueFrom(this.accountService.updateAddress(address));
       }
     }
@@ -108,10 +111,22 @@ export class Checkout implements OnInit, OnDestroy {
       const confirmationToken = this.confirmationToken();
       if (!confirmationToken) throw new Error('Confirmation token not found');
       const result = await this.stripeService.confirmPayment(confirmationToken);
-      if (result.error) throw new Error(result.error.message);
-      this.cartService.deleteCart();
-      this.cartService.selectedDeliveryMethod.set(null);
-      this.router.navigateByUrl('/checkout/success');
+      if (result.paymentIntent?.status === 'succeeded') {
+        const order = await this.createOrderModel();
+        const orderResult = await firstValueFrom(this.orderService.createOrder(order));
+        if (orderResult) {
+          this.orderService.orderCompleted.set(true);
+          this.cartService.deleteCart();
+          this.cartService.selectedDeliveryMethod.set(null);
+          this.router.navigateByUrl('/checkout/success');
+        } else {
+          throw new Error('Order creation failed');
+        }
+      } else if (result.error) {
+        throw new Error(result.error.message);
+      } else {
+        throw new Error('Something went wrong during payment confirmation');
+      }
     } catch (error: any) {
       this.snackbar.error(error.message || 'Payment failed');
       stepper.previous();
@@ -120,12 +135,31 @@ export class Checkout implements OnInit, OnDestroy {
     }
   }
 
-  private async getAdreessFromStripeElement(): Promise<Address | null> {
+  private async createOrderModel(): Promise<OrderToCreate> {
+    const cart = this.cartService.cart();
+    const shippingAddress = await this.getAdreessFromStripeElement() as ShippingAddress;
+    const card = this.confirmationToken()?.payment_method_preview.card;
+    if (!cart?.id || !cart.deliveryMethodId || !shippingAddress || !card) throw new Error('Problem creating order');
+    return {
+      cartId: cart.id,
+      deliveryMethodId: cart.deliveryMethodId,
+      shippingAddress: shippingAddress,
+      paymentSummary: {
+        last4Digits: +card.last4,
+        brand: card.brand,
+        expMonth: card.exp_month,
+        expYear: card.exp_year
+      }
+    };
+  }
+
+  private async getAdreessFromStripeElement(): Promise<Address | ShippingAddress | null> {
     const result = await this.addressElement?.getValue();
     const address = result?.value.address;
 
     if (address) {
       return {
+        name: result.value.name,
         line1: address.line1,
         line2: address.line2 || undefined,
         city: address.city,

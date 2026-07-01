@@ -49,7 +49,7 @@ export class TestError {
       next: response => console.log(response),
       error: error => {
         this.validationErrors.set(error);
-        console.log(this.validationErrors());
+        console.error(this.validationErrors());
       }
     });
   }

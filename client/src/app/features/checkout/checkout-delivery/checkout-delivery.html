@@ -4,7 +4,7 @@
         [value]="cartService.selectedDeliveryMethod()"
         (change)="updateSelectedDeliveryMethod($event.value)"
     >
-        @for (method of checkoutService.deliveryMethods; track method.id) {
+        @for (method of checkoutService.deliveryMethods(); track method.id) {
             <label class="p-3 border border-gray-200 rounded-lg cursor-pointer w-full hover:bg-blue-100">
                 <mat-radio-button 
                     [value]="method" 

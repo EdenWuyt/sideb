@@ -28,9 +28,6 @@ export class CheckoutDelivery implements OnInit {
             this.cartService.selectedDeliveryMethod.set(method);
             this.deliveryComplete.emit(true);
           }
-        } else {
-          this.cartService.selectedDeliveryMethod.set(deliveryMethods[0]);
-          this.deliveryComplete.emit(true);
         }
       }
     });
@@ -42,6 +39,7 @@ export class CheckoutDelivery implements OnInit {
     if (cart) {
       cart.deliveryMethodId = method.id;
       this.cartService.setCart(cart);
+      this.deliveryComplete.emit(true);
     }
   }
 }

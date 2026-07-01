@@ -5,6 +5,7 @@ using Infrastructure.Services;
 using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
+using API.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<StoreContext>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -46,8 +48,13 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowCredentials()
     .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
+// Add authentication and authorization middleware for SignalR
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>();
+app.MapHub<NotificationHub>("/hub/notifications");  // Map the SignalR hub endpoint
 
 try
 {
