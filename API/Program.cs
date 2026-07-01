@@ -52,9 +52,13 @@ app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowCredentials()
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles();  // Serve default files like index.html
+app.UseStaticFiles();   // Serve static files from wwwroot
+
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>();
 app.MapHub<NotificationHub>("/hub/notifications");  // Map the SignalR hub endpoint
+app.MapFallbackToController("Index", "Fallback");  // Fallback route for SPA
 
 try
 {

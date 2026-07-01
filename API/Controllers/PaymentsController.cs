@@ -103,8 +103,8 @@ public class PaymentsController(
             return EventUtility.ConstructEvent(
                 json, 
                 Request.Headers["Stripe-Signature"], 
-                _whSecret,
-                throwOnApiVersionMismatch: false    // Set to false to avoid exceptions for API version mismatches locally
+                _whSecret
+                // throwOnApiVersionMismatch: false    // Set to false to avoid exceptions for API version mismatches locally
                 );
         }
         catch (Exception ex)
