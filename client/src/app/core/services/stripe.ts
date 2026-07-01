@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ConfirmationToken, loadStripe, StripeAddressElement, StripeAddressElementOptions, StripeElements, StripePaymentElement, Stripe as StripeType } from '@stripe/stripe-js';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from './cart';
 import { Cart as CartType } from '../../shared/models/cart';
