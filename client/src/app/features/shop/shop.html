@@ -1,57 +1,77 @@
 @if (products(); as productList) {
-<div class="flex flex-col gap-3">
-    <div class="flex justify-between">
-        <mat-paginator 
-            (page)="handlePageEvent($event)"
-            [length]="productList.count"
-            [pageSize]="shopParams.pageSize"
-            [showFirstLastButtons]="true"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="shopParams.pageIndex - 1"
-            aria-label="Select page"
+  @if (productList.count > 0) {
+    <div class="flex flex-col gap-3">
+      <div class="flex justify-between">
+        <mat-paginator
+          (page)="handlePageEvent($event)"
+          [length]="productList.count"
+          [pageSize]="shopParams.pageSize"
+          [showFirstLastButtons]="true"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageIndex]="shopParams.pageIndex - 1"
+          aria-label="Select page"
         >
         </mat-paginator>
-        <form 
-            #searchForm="ngForm" 
-            (ngSubmit)="onSearchChange()"
-            class="relative flex items-center w-full max-w-md mx-4"
+        <form
+          #searchForm="ngForm"
+          (ngSubmit)="onSearchChange()"
+          class="relative flex items-center w-full max-w-md mx-4"
         >
-            <input 
-                type="text" 
-                name="search" 
-                [(ngModel)]="shopParams.search" 
-                placeholder="Search name or artist..." 
-                class="w-full pl-4 pr-12 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button mat-icon-button type="submit" class="absolute right-4 flex items-center cursor-pointer">
-                <mat-icon>search</mat-icon>
-            </button>
-         </form>
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="shopParams.search"
+            placeholder="Search name or artist..."
+            class="w-full pl-4 pr-12 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            mat-icon-button
+            type="submit"
+            class="absolute right-4 flex items-center cursor-pointer"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </form>
         <div class="flex gap-3 items-center">
-            <button mat-stroked-button (click)="openFiltersDialog()">
-                <mat-icon>filter_list</mat-icon>
-                Filters
-            </button>
-            <button mat-stroked-button [matMenuTriggerFor]="sortMenu">
-                <mat-icon>swap_vert</mat-icon>
-                Sort
-            </button>
+          <button mat-stroked-button (click)="openFiltersDialog()">
+            <mat-icon>filter_list</mat-icon>
+            Filters
+          </button>
+          <button mat-stroked-button [matMenuTriggerFor]="sortMenu">
+            <mat-icon>swap_vert</mat-icon>
+            Sort
+          </button>
         </div>
-    </div>
-    <div class="grid grid-cols-5 gap-4">
+      </div>
+      <div class="grid grid-cols-5 gap-4">
         @for (product of productList.data; track product.id) {
-            <app-product-item [product]="product"></app-product-item>
+          <app-product-item [product]="product"></app-product-item>
         }
+      </div>
     </div>
-</div>
 
-<mat-menu #sortMenu="matMenu">
-    <mat-selection-list [multiple]="false" (selectionChange)="onSortChange($event)">
+    <mat-menu #sortMenu="matMenu">
+      <mat-selection-list [multiple]="false" (selectionChange)="onSortChange($event)">
         @for (option of sortOptions; track $index) {
-            <mat-list-option [value]="option.value" [selected]="shopParams.sort === option.value">
-                {{ option.label }}
-            </mat-list-option>
+          <mat-list-option [value]="option.value" [selected]="shopParams.sort === option.value">
+            {{ option.label }}
+          </mat-list-option>
         }
-    </mat-selection-list>
-</mat-menu>
+      </mat-selection-list>
+    </mat-menu>
+  } @else {
+    <app-empty-state
+      [icon]="'filter_alt_off'"
+      [message]="'No products found matching this filter'"
+      [actionText]="'Reset Filters'"
+      (action)="resetFilters()"
+    />
+  }
+} @else {
+  <app-empty-state
+    [icon]="'filter_alt_off'"
+    [message]="'No products found matching this filter'"
+    [actionText]="'Reset Filters'"
+    (action)="resetFilters()"
+  />
 }

@@ -1,21 +1,32 @@
 <section>
-    @if (cartService.cart(); as cart) {
-        @if (cart.items.length > 0) {
-            <div class="mx-auto max-w-6xl">
-                <div class="flex w-full gap-6 mt-32">
-                    <div class="w-3/4">
-                        @for (item of cart.items; track $index) {
-                            <app-cart-item [item]="item"></app-cart-item>
-                        }
-                    </div>
-                    <div class="w-1/4">
-                    <app-order-summary></app-order-summary>
-                    </div>
-                </div>
-            </div>
-        } @else {
-            <app-empty-state></app-empty-state>
-    }} @else {
-        <app-empty-state></app-empty-state>
+  @if (cartService.cart(); as cart) {
+    @if (cart.items.length > 0) {
+      <div class="mx-auto max-w-6xl">
+        <div class="flex w-full gap-6 mt-32">
+          <div class="w-3/4">
+            @for (item of cart.items; track $index) {
+              <app-cart-item [item]="item"></app-cart-item>
+            }
+          </div>
+          <div class="w-1/4">
+            <app-order-summary></app-order-summary>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <app-empty-state
+        [icon]="'shopping_cart'"
+        [message]="'Your shopping cart is empty'"
+        [actionText]="'Continue Shopping'"
+        (action)="continueShopping()"
+      />
     }
+  } @else {
+    <app-empty-state
+      [icon]="'shopping_cart'"
+      [message]="'Your shopping cart is empty'"
+      [actionText]="'Continue Shopping'"
+      (action)="continueShopping()"
+    />
+  }
 </section>
