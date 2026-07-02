@@ -30,7 +30,6 @@ export class OrderSummary {
   private stripeService = inject(Stripe);
   location = inject(Location);
   couponCode?: string;
-  orderConfirmed = input<boolean>(false);
 
   applyCoupon() {
     if (!this.couponCode) return;

@@ -32,8 +32,8 @@
       @if (cartService.cart()?.coupon; as coupon) {
         <div class="flex items-center justify-between gap-2">
           <span class="font-medium">{{ coupon.promotionCode }} applied</span>
-          <button mat-icon-button (click)="removeCoupon()" [disabled]="orderConfirmed()">
-            <mat-icon [class.text-red-800!]="!orderConfirmed()">delete</mat-icon>
+          <button mat-icon-button (click)="removeCoupon()">
+            <mat-icon class="text-red-800!">delete</mat-icon>
           </button>
         </div>
       }
@@ -44,14 +44,10 @@
           type="text"
           [(ngModel)]="couponCode"
           name="couponCode"
-          [disabled]="!!cartService.cart()?.coupon || orderConfirmed()"
+          [disabled]="!!cartService.cart()?.coupon"
         />
       </mat-form-field>
-      <button
-        mat-flat-button
-        [disabled]="!!cartService.cart()?.coupon || orderConfirmed()"
-        type="submit"
-      >
+      <button mat-flat-button [disabled]="!!cartService.cart()?.coupon" type="submit">
         Apply Code
       </button>
     </form>
