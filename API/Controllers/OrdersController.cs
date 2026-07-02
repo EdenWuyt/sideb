@@ -16,7 +16,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
     public async Task<ActionResult<Order>> CreateOrder(CreateOrderDto orderDto)
     {
         var email = User.GetEmail();
-        
+
         var cart = await cartService.GetCartAsync(orderDto.CartId);
         if (cart == null) return BadRequest("Cart not found");
         if (cart.PaymentIntentId == null) return BadRequest("Payment intent not found");
@@ -43,6 +43,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
             ShippingAddress = orderDto.ShippingAddress.ToEntity(),
             PaymentSummary = orderDto.PaymentSummary.ToEntity(),
             Subtotal = items.Sum(item => item.Price * item.Quantity),
+            Discount = orderDto.Discount,
             PaymentIntentId = cart.PaymentIntentId
         };
 
@@ -52,7 +53,7 @@ public class OrdersController(ICartService cartService, IUnitOfWork unitOfWork) 
             return Ok(order);
         }
         return BadRequest("Problem creating order");
-    } 
+    }
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetOrdersForUser()

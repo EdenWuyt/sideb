@@ -48,6 +48,7 @@ export class Checkout implements OnInit, OnDestroy {
   completionStatus = signal<{address: boolean, delivery: boolean, card: boolean}>({address: false, delivery: false, card: false});
   confirmationToken = signal<ConfirmationToken | null>(null);
   confirmPaymentLoading = signal<boolean>(false);
+  orderConfirmed = signal<boolean>(false);
 
   async ngOnInit() {
     try {
@@ -102,6 +103,7 @@ export class Checkout implements OnInit, OnDestroy {
     }
     if (event.selectedIndex === 3) {
       await this.getConfirmationToken();
+      this.orderConfirmed.set(true);
     }
   }
 
@@ -149,7 +151,8 @@ export class Checkout implements OnInit, OnDestroy {
         brand: card.brand,
         expMonth: card.exp_month,
         expYear: card.exp_year
-      }
+      },
+      discount: this.cartService.totals()?.discount || 0
     };
   }
 

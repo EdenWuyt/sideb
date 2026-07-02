@@ -12,9 +12,9 @@ using API.Extensions;
 namespace API.Controllers;
 
 public class PaymentsController(
-    IPaymentService paymentService, 
-    IUnitOfWork unitOfWork, 
-    ILogger<PaymentsController> logger, 
+    IPaymentService paymentService,
+    IUnitOfWork unitOfWork,
+    ILogger<PaymentsController> logger,
     IConfiguration configuration,
     IHubContext<NotificationHub> notificationHubContext) : BaseApiController
 {
@@ -42,7 +42,7 @@ public class PaymentsController(
         var json = await new StreamReader(Request.Body).ReadToEndAsync();   // Raw json payload from Stripe
         try
         {
-            var stripeEvent = ConstructStripeEvent(json); 
+            var stripeEvent = ConstructStripeEvent(json);
             if (stripeEvent.Data.Object is not PaymentIntent paymentIntent) return BadRequest("Invalid event data");
             await HandlePaymentIntentSucceeded(paymentIntent);
             return Ok();
@@ -69,15 +69,16 @@ public class PaymentsController(
             {
                 var orderSpec = new OrderSpecification(paymentIntent.Id, true);
                 order = await unitOfWork.Repository<Core.Entities.OrderAggregate.Order>().GetBySpecAsync(orderSpec);
-                if (order != null) break;   
-                await Task.Delay(2000);
+                if (order != null) break;
+                await Task.Delay(500); // Wait for 500ms before retrying
             }
             if (order == null)
             {
                 logger.LogError("Order not found for PaymentIntent ID: {PaymentIntentId}", paymentIntent.Id);
                 throw new Exception("Order not found");
             }
-            if ((long)(order.GetTotal() * 100) != paymentIntent.Amount)
+            var orderTotalInCents = (long)Math.Round(order.GetTotal() * 100, MidpointRounding.AwayFromZero);
+            if (orderTotalInCents != paymentIntent.Amount)
             {
                 order.Status = OrderStatus.PaymentMismatch;
             }
@@ -86,7 +87,7 @@ public class PaymentsController(
                 order.Status = OrderStatus.PaymentReceived;
             }
             await unitOfWork.Complete();
-            
+
             // Notify the user about the payment status (signalR)
             var connectionIds = NotificationHub.GetConnectionIdsByEmail(order.BuyerEmail);
             if (connectionIds.Count != 0)
@@ -101,10 +102,10 @@ public class PaymentsController(
         try
         {
             return EventUtility.ConstructEvent(
-                json, 
-                Request.Headers["Stripe-Signature"], 
-                _whSecret
-                // throwOnApiVersionMismatch: false    // Set to false to avoid exceptions for API version mismatches locally
+                json,
+                Request.Headers["Stripe-Signature"],
+                _whSecret,
+                throwOnApiVersionMismatch: false    // Set to false to avoid exceptions for API version mismatches locally
                 );
         }
         catch (Exception ex)

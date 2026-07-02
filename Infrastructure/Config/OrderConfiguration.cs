@@ -20,6 +20,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             od => DateTime.SpecifyKind(od, DateTimeKind.Utc)
         );
         builder.Property(o => o.Subtotal).HasColumnType("decimal(18,2)");
+        builder.Property(o => o.Discount).HasColumnType("decimal(18,2)");
         builder.HasMany(o => o.OrderItems).WithOne().OnDelete(DeleteBehavior.Cascade);
     }
 }

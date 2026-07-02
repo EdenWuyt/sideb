@@ -23,7 +23,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddCors();    // Add CORS services
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("Redis") 
+    var connectionString = builder.Configuration.GetConnectionString("Redis")
         ?? throw new InvalidOperationException("Cannot get Redis connection string from configuration.");
     var configuration = ConfigurationOptions.Parse(connectionString, true);
     return ConnectionMultiplexer.Connect(configuration);
@@ -32,6 +32,7 @@ builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<StoreContext>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddSignalR();
 
 var app = builder.Build();
@@ -63,8 +64,8 @@ app.MapFallbackToController("Index", "Fallback");  // Fallback route for SPA
 try
 {
     using var scope = app.Services.CreateScope();   // Create a scope to get the services we need for seeding the database
-    var services = scope.ServiceProvider;           
-    var context = services.GetRequiredService<StoreContext>(); 
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<StoreContext>();
     await context.Database.MigrateAsync();
     await StoreContextSeed.SeedAsync(context);
 }

@@ -1,6 +1,6 @@
 namespace Core.Entities.OrderAggregate;
 
-public class Order: BaseEntity
+public class Order : BaseEntity
 {
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
     public required string BuyerEmail { get; set; }
@@ -11,6 +11,7 @@ public class Order: BaseEntity
     public decimal Subtotal { get; set; }
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
     public required string PaymentIntentId { get; set; }
-    
-    public decimal GetTotal() => Subtotal + DeliveryMethod.Price;
+    public decimal Discount { get; set; } = 0m;
+
+    public decimal GetTotal() => Subtotal + DeliveryMethod.Price - Discount;
 }

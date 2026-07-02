@@ -14,7 +14,8 @@ public static class ShoppingCartMappingExtensions
             Items = cartDto.Items.Select(i => i.ToEntity()).ToList(),
             DeliveryMethodId = cartDto.DeliveryMethodId,
             ClientSecret = cartDto.ClientSecret,
-            PaymentIntentId = cartDto.PaymentIntentId
+            PaymentIntentId = cartDto.PaymentIntentId,
+            Coupon = cartDto.Coupon?.ToEntity()
         };
     }
 }
